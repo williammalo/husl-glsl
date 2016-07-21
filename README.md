@@ -1,5 +1,3 @@
-README.md
-
 # HUSL-GLSL
 
 HUSL is a human-friendly alternative to HSL. ( http://www.husl-colors.org )
