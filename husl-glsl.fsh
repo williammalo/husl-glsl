@@ -1,5 +1,5 @@
 /*
-HUSL-GLSL v1.1
+HUSL-GLSL v2.0
 HUSL is a human-friendly alternative to HSL. ( http://www.husl-colors.org )
 GLSL port by William Malo ( https://github.com/williammalo )
 Put this code in your fragment shader.
@@ -97,6 +97,12 @@ float husl_toLinear(float c) {
 vec3 husl_toLinear(vec3 c) {
     return vec3( husl_toLinear(c.r), husl_toLinear(c.g), husl_toLinear(c.b) );
 }
+float husl_Y_to_L(float Y){
+    return Y <= 0.0088564516790356308 ? Y * 903.2962962962963 : 116.0 * pow(Y, 1.0 / 3.0) - 16.0;
+}
+float husl_L_to_Y(float L) {
+    return L <= 8.0 ? L / 903.2962962962963 : pow((L + 16.0) / 116.0, 3.0);
+}
 
 vec4 xyz_to_rgb(vec4 tuple) {
     return vec4(
@@ -115,14 +121,6 @@ vec4 rgb_to_xyz(vec4 tuple) {
         dot(vec3(0.019330818715591851, 0.11919477979462599, 0.95053215224966058 ), rgbl ),//z
         tuple.a
     );
-}
-
-float husl_Y_to_L(float Y){
-    return Y <= 0.0088564516790356308 ? Y * 903.2962962962963 : 116.0 * pow(Y, 1.0 / 3.0) - 16.0;
-}
-
-float husl_L_to_Y(float L) {
-    return L <= 8.0 ? L / 903.2962962962963 : pow((L + 16.0) / 116.0, 3.0);
 }
 
 vec4 xyz_to_luv(vec4 tuple){
@@ -229,6 +227,61 @@ vec4 rgb_to_huslp(vec4 tuple) {
 vec4 luv_to_rgb(vec4 tuple){
     return xyz_to_rgb(luv_to_xyz(tuple));
 }
+
+// allow vec3's
+vec3   xyz_to_rgb(vec3 tuple) {return   xyz_to_rgb(vec4(tuple,1.0)).rgb;}
+vec3   rgb_to_xyz(vec3 tuple) {return   rgb_to_xyz(vec4(tuple,1.0)).rgb;}
+vec3   xyz_to_luv(vec3 tuple) {return   xyz_to_luv(vec4(tuple,1.0)).rgb;}
+vec3   luv_to_xyz(vec3 tuple) {return   luv_to_xyz(vec4(tuple,1.0)).rgb;}
+vec3   luv_to_lch(vec3 tuple) {return   luv_to_lch(vec4(tuple,1.0)).rgb;}
+vec3   lch_to_luv(vec3 tuple) {return   lch_to_luv(vec4(tuple,1.0)).rgb;}
+vec3  husl_to_lch(vec3 tuple) {return  husl_to_lch(vec4(tuple,1.0)).rgb;}
+vec3  lch_to_husl(vec3 tuple) {return  lch_to_husl(vec4(tuple,1.0)).rgb;}
+vec3 huslp_to_lch(vec3 tuple) {return huslp_to_lch(vec4(tuple,1.0)).rgb;}
+vec3 lch_to_huslp(vec3 tuple) {return lch_to_huslp(vec4(tuple,1.0)).rgb;}
+vec3   lch_to_rgb(vec3 tuple) {return   lch_to_rgb(vec4(tuple,1.0)).rgb;}
+vec3   rgb_to_lch(vec3 tuple) {return   rgb_to_lch(vec4(tuple,1.0)).rgb;}
+vec3  husl_to_rgb(vec3 tuple) {return  husl_to_rgb(vec4(tuple,1.0)).rgb;}
+vec3  rgb_to_husl(vec3 tuple) {return  rgb_to_husl(vec4(tuple,1.0)).rgb;}
+vec3 huslp_to_rgb(vec3 tuple) {return huslp_to_rgb(vec4(tuple,1.0)).rgb;}
+vec3 rgb_to_huslp(vec3 tuple) {return rgb_to_huslp(vec4(tuple,1.0)).rgb;}
+vec3   luv_to_rgb(vec3 tuple) {return   luv_to_rgb(vec4(tuple,1.0)).rgb;}
+// allow 3 floats
+vec3   xyz_to_rgb(float x, float y, float z) {return   xyz_to_rgb( vec3(x,y,z) );}
+vec3   rgb_to_xyz(float x, float y, float z) {return   rgb_to_xyz( vec3(x,y,z) );}
+vec3   xyz_to_luv(float x, float y, float z) {return   xyz_to_luv( vec3(x,y,z) );}
+vec3   luv_to_xyz(float x, float y, float z) {return   luv_to_xyz( vec3(x,y,z) );}
+vec3   luv_to_lch(float x, float y, float z) {return   luv_to_lch( vec3(x,y,z) );}
+vec3   lch_to_luv(float x, float y, float z) {return   lch_to_luv( vec3(x,y,z) );}
+vec3  husl_to_lch(float x, float y, float z) {return  husl_to_lch( vec3(x,y,z) );}
+vec3  lch_to_husl(float x, float y, float z) {return  lch_to_husl( vec3(x,y,z) );}
+vec3 huslp_to_lch(float x, float y, float z) {return huslp_to_lch( vec3(x,y,z) );}
+vec3 lch_to_huslp(float x, float y, float z) {return lch_to_huslp( vec3(x,y,z) );}
+vec3   lch_to_rgb(float x, float y, float z) {return   lch_to_rgb( vec3(x,y,z) );}
+vec3   rgb_to_lch(float x, float y, float z) {return   rgb_to_lch( vec3(x,y,z) );}
+vec3  husl_to_rgb(float x, float y, float z) {return  husl_to_rgb( vec3(x,y,z) );}
+vec3  rgb_to_husl(float x, float y, float z) {return  rgb_to_husl( vec3(x,y,z) );}
+vec3 huslp_to_rgb(float x, float y, float z) {return huslp_to_rgb( vec3(x,y,z) );}
+vec3 rgb_to_huslp(float x, float y, float z) {return rgb_to_huslp( vec3(x,y,z) );}
+vec3   luv_to_rgb(float x, float y, float z) {return   luv_to_rgb( vec3(x,y,z) );}
+// allow 4 floats
+vec4   xyz_to_rgb(float x, float y, float z, float a) {return   xyz_to_rgb( vec4(x,y,z,a) );}
+vec4   rgb_to_xyz(float x, float y, float z, float a) {return   rgb_to_xyz( vec4(x,y,z,a) );}
+vec4   xyz_to_luv(float x, float y, float z, float a) {return   xyz_to_luv( vec4(x,y,z,a) );}
+vec4   luv_to_xyz(float x, float y, float z, float a) {return   luv_to_xyz( vec4(x,y,z,a) );}
+vec4   luv_to_lch(float x, float y, float z, float a) {return   luv_to_lch( vec4(x,y,z,a) );}
+vec4   lch_to_luv(float x, float y, float z, float a) {return   lch_to_luv( vec4(x,y,z,a) );}
+vec4  husl_to_lch(float x, float y, float z, float a) {return  husl_to_lch( vec4(x,y,z,a) );}
+vec4  lch_to_husl(float x, float y, float z, float a) {return  lch_to_husl( vec4(x,y,z,a) );}
+vec4 huslp_to_lch(float x, float y, float z, float a) {return huslp_to_lch( vec4(x,y,z,a) );}
+vec4 lch_to_huslp(float x, float y, float z, float a) {return lch_to_huslp( vec4(x,y,z,a) );}
+vec4   lch_to_rgb(float x, float y, float z, float a) {return   lch_to_rgb( vec4(x,y,z,a) );}
+vec4   rgb_to_lch(float x, float y, float z, float a) {return   rgb_to_lch( vec4(x,y,z,a) );}
+vec4  husl_to_rgb(float x, float y, float z, float a) {return  husl_to_rgb( vec4(x,y,z,a) );}
+vec4  rgb_to_husl(float x, float y, float z, float a) {return  rgb_to_husl( vec4(x,y,z,a) );}
+vec4 huslp_to_rgb(float x, float y, float z, float a) {return huslp_to_rgb( vec4(x,y,z,a) );}
+vec4 rgb_to_huslp(float x, float y, float z, float a) {return rgb_to_huslp( vec4(x,y,z,a) );}
+vec4   luv_to_rgb(float x, float y, float z, float a) {return   luv_to_rgb( vec4(x,y,z,a) );}
 
 /*
 END HUSL-GLSL

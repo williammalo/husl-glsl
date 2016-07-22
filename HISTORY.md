@@ -11,3 +11,7 @@ v1.0 July 21, 2016
 v1.1 July 22, 2016
 	- simplified and cleaned up code
 	- optimisation
+
+v2.0 July 22, 2016
+	- all functions accept color without alpha
+	- functions accept floats as well as vectors
