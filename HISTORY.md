@@ -18,3 +18,10 @@ v2.0 July 22, 2016
 
 v3.0 July 25, 2016
 	- changed api to camelCase
+
+v3.1 July 25, 2016
+	- cleaned up code
+	- functions written for vec3's first to keep logic cleaner
+
+v3.2 July 25, 2016
+	- fixed hulsp that was broken
