@@ -15,3 +15,6 @@ v1.1 July 22, 2016
 v2.0 July 22, 2016
 	- all functions accept color without alpha
 	- functions accept floats as well as vectors
+
+v3.0 July 25, 2016
+	- changed api to camelCase
